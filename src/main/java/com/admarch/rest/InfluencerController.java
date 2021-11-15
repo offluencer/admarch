@@ -25,7 +25,15 @@ public class InfluencerController {
     ){
         influencerService.createInfluencer(influencer);
     }
-    public void getInfluencerEarnings(){}
+
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{version:[v|V][0-9]+}/earning")
+    public void getInfluencerEarnings(
+            @PathVariable("version") String version,
+            @RequestParam(value = "nonce", required = false) String nonce
+            ){
+        
+    }
     public void upsertInfluencerInfo(){}
     public void getAllInfluencerRankings(){}
 
