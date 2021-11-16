@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Data
+@Table(name = "Influencer", catalog = "admarch")
 public class Influencer implements Serializable {
     @Id
     @Column(name = "regNumber")
@@ -16,10 +17,6 @@ public class Influencer implements Serializable {
     private String name;
     @Column(name = "city")
     private String city;
-    @Column(name = "state")
-    private String state;
-    @Column(name = "area")
-    private String area;
     @Column(name = "pincode")
     private String pincode;
     @Column(name = "phoneNumber")

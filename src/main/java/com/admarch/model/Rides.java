@@ -22,7 +22,7 @@ public class Rides implements Serializable {
     private String rideId;
     @Column(name = "regNumber")
     private String regNumber;
-    @Column(name = "regNumber")
+    @Column(name = "rideSource")
     private String rideSource;
     @Column(name = "rideDestination")
     private String rideDestination;

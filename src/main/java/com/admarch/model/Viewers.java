@@ -16,7 +16,7 @@ public class Viewers implements Serializable {
     private String rideId;
 
     @Id
-    @Column(name = "rideId")
+    @Column(name = "viewerId")
     private String viewerId;
 
     @Column(name = "ageRange")
