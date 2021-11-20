@@ -1,14 +1,39 @@
 package com.admarch.rest;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.admarch.model.Influencer;
+import com.admarch.model.RideDetails;
+import com.admarch.model.Rides;
+import com.admarch.service.RideService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/admarch/")
 public class RideController {
+
+    @Autowired
+    RideService rideService;
+
     public void updateRideLocation(){}
     public void upsertViewerInfo(){}
     public void upsertRideInfo(){}
-    public void startRide(){}
+
+    @RequestMapping(method = RequestMethod.POST, value = "/{version:[v|V][0-9]+}/startRide")
+    public void startRide(
+            @PathVariable("version") String version,
+            @RequestParam(value = "nonce", required = false) String nonce,
+            @RequestBody Rides rides
+    ){
+        rideService.startRide(rides);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/{version:[v|V][0-9]+}/endRide")
+    public void endRide(
+            @PathVariable("version") String version,
+            @RequestParam(value = "nonce", required = false) String nonce,
+            @RequestBody RideDetails rides
+    ){
+        rideService.endRide(rides);
+    }
 
 }

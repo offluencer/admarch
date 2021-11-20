@@ -34,5 +34,7 @@ public class Rides implements Serializable {
     private Timestamp startRideTime;
     @Column(name = "endRideTime")
     private Timestamp endRideTime;
+    @Column(name = "isActive")
+    private int isActive;
 
 }
