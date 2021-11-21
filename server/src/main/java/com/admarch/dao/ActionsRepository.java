@@ -16,7 +16,7 @@ import java.util.List;
 public interface ActionsRepository extends CrudRepository<Actions,String> {
 //    Rides findByregNumberAndIsActiveEquals(String regNumber, int isActive);
     @Query("SELECT new com.admarch.model.LeaderBoard(a.registerNumber, SUM(a.actionEarning)) " +
-            "from Actions as a group by a.registerNumber order by SUM(a.actionEarning)")
+            "from Actions as a group by a.registerNumber ")
     List<LeaderBoard> countTotalEarningsByRegisterNumber();
 
     @Query("SELECT new com.admarch.model.Earnings(a.registerNumber, COUNT(a.actionEarning), SUM(a.actionEarning)) " +

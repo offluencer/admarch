@@ -40,7 +40,7 @@ public class InfluencerController {
         return influencerService.getInfluencerEarning(regNum);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{version:[v|V][0-9]+}/earning")
+    @RequestMapping(method = RequestMethod.GET, value = "/{version:[v|V][0-9]+}/ranking")
     public List<LeaderBoard> getAllInfluencerRankings(
             @PathVariable("version") String version,
             @RequestParam(value = "nonce", required = false) String nonce
