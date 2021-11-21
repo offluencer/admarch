@@ -11,6 +11,8 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.9.RELEASE</version>
+        <relativePath/>
+
     </parent>
     <properties>
         <mysql.connector.version>8.0.11</mysql.connector.version>
@@ -86,7 +88,8 @@
             <scope>compile</scope> <!-- CHANGE HERE -->
         </dependency>
     </dependencies>
-
+    <build>
+    <plugins>
     <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
@@ -94,31 +97,12 @@
         <configuration>
             <archive>
                 <manifest>
-                    <addClasspath>true</addClasspath>
                     <mainClass>com.admarch.AdmarchApplication</mainClass>
-                    <classpathPrefix>dependency-jars/</classpathPrefix>
                 </manifest>
             </archive>
         </configuration>
     </plugin>
-    <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>2.5.1</version>
-        <executions>
-            <execution>
-                <id>copy-dependencies</id>
-                <phase>package</phase>
-                <goals>
-                    <goal>copy-dependencies</goal>
-                </goals>
-                <configuration>
-                    <outputDirectory>
-                        ${project.build.directory}/dependency-jars/
-                    </outputDirectory>
-                </configuration>
-            </execution>
-        </executions>
-    </plugin>
+    </plugins>
+    </build>
 
 </project>
