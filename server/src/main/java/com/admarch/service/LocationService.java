@@ -35,6 +35,7 @@ public class LocationService {
 
         StringBuilder stringBuilder = new StringBuilder();
 
+        // TODO: currently all the data is written at once, need to split this
         for(Location location:locations.getLocations()){
             stringBuilder.append(rideId);
             stringBuilder.append(wordDelim);
