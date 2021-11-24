@@ -6,6 +6,6 @@ import androidx.fragment.app.Fragment;
 
 public class LeaderFragment extends Fragment {
     public LeaderFragment() {
-        super(R.layout.tab1_fragment);
+        super(R.layout.tab2_fragment);
     }
 }
