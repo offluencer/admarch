@@ -5,6 +5,8 @@ import com.admarch.model.Influencer;
 import com.admarch.model.LeaderBoard;
 import com.admarch.service.InfluencerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,12 +34,12 @@ public class InfluencerController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{version:[v|V][0-9]+}/earning")
-    public Earnings getInfluencerEarnings(
+    public ResponseEntity<Earnings> getInfluencerEarnings(
             @PathVariable("version") String version,
             @RequestParam(value = "nonce", required = false) String nonce,
             @RequestParam(value = "regNumber") String regNum
             ){
-        return influencerService.getInfluencerEarning(regNum);
+        return new ResponseEntity<>(influencerService.getInfluencerEarning(regNum), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{version:[v|V][0-9]+}/ranking")
