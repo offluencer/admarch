@@ -89,11 +89,6 @@ public class SessionManager {
         HashMap<String, String> user = new HashMap<String, String>();
         // user name
         user.put(KEY_NAME, pref.getString(KEY_NAME, null));
-
-        // user email id
-//        user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
-
-        // return user
         return user;
     }
     // Get Login State

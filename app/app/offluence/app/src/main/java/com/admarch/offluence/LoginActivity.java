@@ -12,6 +12,8 @@ import com.admarch.offluence.rest.APIClient;
 import com.admarch.offluence.utils.CommonMethod;
 import com.admarch.offluence.utils.SessionManager;
 
+import java.io.IOException;
+
 import androidx.appcompat.app.AppCompatActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,32 +53,16 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
-    private void registerUser(String regNumber){
+    private void registerUser(String regNumber) {
         final LoginResponse login = new LoginResponse(regNumber);
-        Call<LoginResponse> call1 = APIClient.getInstance().getMyApi().createUser(login);
-        call1.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                LoginResponse loginResponse = response.body();
-
-                if (loginResponse != null) {
-
-
-//                    String responseCode = loginResponse.();
-
-//                    if (responseCode != null && responseCode.equals("404")) {
-//                        Toast.makeText(MainActivity.this, "Invalid Login Details \n Please try again", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Toast.makeText(MainActivity.this, "Welcome " + loginResponse.getRegNumber(), Toast.LENGTH_SHORT).show();
-//                    }
-                }
+        try {
+            Call<LoginResponse> call1 = APIClient.getInstance().getMyApi().createUser(login);
+            Response<LoginResponse> loginResponse = call1.execute();
+            if (loginResponse.isSuccessful()) {
+                session.createLoginSession(loginResponse.body().getRegNumber());
             }
+        } catch (Exception exception) {
 
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "onFailure called ", Toast.LENGTH_SHORT).show();
-                call.cancel();
-            }
-        });
+        }
     }
 }

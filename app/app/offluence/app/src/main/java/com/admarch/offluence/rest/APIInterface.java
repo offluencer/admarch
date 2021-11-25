@@ -1,6 +1,8 @@
 package com.admarch.offluence.rest;
 
+import com.admarch.offluence.model.EndRideResponse;
 import com.admarch.offluence.model.LoginResponse;
+import com.admarch.offluence.model.Ride;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -17,6 +19,11 @@ public interface APIInterface {
 
         @POST("v1/register")
         Call<LoginResponse> createUser(@Body LoginResponse login);
+
+        @POST("v1/startRide")
+        Call<Ride> startRide(@Body Ride ride);
+        @POST("v1/endRide")
+        Call<EndRideResponse> endRide(@Body EndRideResponse endRide);
 
 //        @POST("v1/register")
 //        Call<LoginResponse> createUser(@Body LoginResponse login);

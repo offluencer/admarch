@@ -23,7 +23,7 @@ public class Ride {
         this.startRideTime = startRideTime;
         this.isActive = isActive;
     }
-    
+
     public String getRideId() {
         return rideId;
     }
