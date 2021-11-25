@@ -2,17 +2,27 @@ package com.admarch.offluence;
 
 import android.os.Bundle;
 
+import com.admarch.offluence.fragments.FragmentChangeListener;
 import com.admarch.offluence.utils.SectionPageAdapter;
+import com.admarch.offluence.utils.SessionManager;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity  {
     TabLayout tabLayout;
     ViewPager viewPager;
+    // Session Manager Class
+    SessionManager session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        session = new SessionManager(getApplicationContext());
+
+        session.checkLogin();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         tabLayout=(TabLayout)findViewById(R.id.tabLayout);
@@ -38,4 +48,12 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+//    @Override
+//    public void replaceFragment(Fragment fragment) {
+//        FragmentManager fragmentManager = getSupportFragmentManager();;
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.activity_tab, fragment, fragment.toString());
+//        fragmentTransaction.addToBackStack(fragment.toString());
+//        fragmentTransaction.commit();
+//    }
 }

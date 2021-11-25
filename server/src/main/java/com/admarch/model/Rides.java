@@ -30,9 +30,9 @@ public class Rides implements Serializable {
     private int rideFare;
     @Column(name = "rideDuration")
     private int rideDuration;
-    @Column(name = "startRideTime")
+    @Column(name = "rideStartTime")
     private Timestamp startRideTime;
-    @Column(name = "endRideTime")
+    @Column(name = "rideEndTime")
     private Timestamp endRideTime;
     @Column(name = "isActive")
     private int isActive;

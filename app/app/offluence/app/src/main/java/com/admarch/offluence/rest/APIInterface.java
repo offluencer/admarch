@@ -17,5 +17,11 @@ public interface APIInterface {
 
         @POST("v1/register")
         Call<LoginResponse> createUser(@Body LoginResponse login);
+
+//        @POST("v1/register")
+//        Call<LoginResponse> createUser(@Body LoginResponse login);
+//        @POST("v1/register")
+//        Call<LoginResponse> createUser(@Body LoginResponse login);
+
 }
 

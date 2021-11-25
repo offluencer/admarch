@@ -19,21 +19,23 @@ public class RideController {
     public void upsertRideInfo(){}
 
     @RequestMapping(method = RequestMethod.POST, value = "/{version:[v|V][0-9]+}/startRide")
-    public void startRide(
+    public Rides startRide(
             @PathVariable("version") String version,
             @RequestParam(value = "nonce", required = false) String nonce,
             @RequestBody Rides rides
     ){
         rideService.startRide(rides);
+        return rides;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{version:[v|V][0-9]+}/endRide")
-    public void endRide(
+    public RideDetails endRide(
             @PathVariable("version") String version,
             @RequestParam(value = "nonce", required = false) String nonce,
             @RequestBody RideDetails rides
     ){
         rideService.endRide(rides);
+        return rides;
     }
 
 }
