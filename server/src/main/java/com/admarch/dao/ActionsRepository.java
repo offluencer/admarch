@@ -19,7 +19,7 @@ public interface ActionsRepository extends CrudRepository<Actions,String> {
             "from Actions as a group by a.registerNumber ")
     List<LeaderBoard> countTotalEarningsByRegisterNumber();
 
-    @Query("SELECT new com.admarch.model.Earnings(a.registerNumber, COUNT(a.actionEarning), SUM(a.actionEarning)) " +
+    @Query("SELECT new com.admarch.model.Earnings(a.registerNumber, COUNT(a.actionEarning) , SUM(a.actionEarning)) " +
             "from Actions as a " +
             "where a.registerNumber = :registerNumber")
     Earnings getInfluencerEarning(

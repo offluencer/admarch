@@ -31,7 +31,12 @@ public class InfluencerServiceImpl implements InfluencerService{
 
     @Override
     public Earnings getInfluencerEarning(String regNumber) {
-        return actionsRepository.getInfluencerEarning(regNumber);
+        try{
+            Earnings earnings  = actionsRepository.getInfluencerEarning(regNumber);
+            return earnings;
+        }catch (Exception ex){
+            return new Earnings();
+        }
     }
 
 }
