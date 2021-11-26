@@ -10,7 +10,7 @@ CREATE TABLE `Actions` (
   PRIMARY KEY (`actionId`),
   KEY `registerNumber` (`registerNumber`),
   CONSTRAINT `actions_ibfk_1` FOREIGN KEY (`registerNumber`) REFERENCES `Influencer` (`regNumber`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `Campaign` (
   `campaignId` varchar(255) NOT NULL DEFAULT '',
@@ -18,7 +18,7 @@ CREATE TABLE `Campaign` (
   `tinyUrl` varchar(255) DEFAULT NULL,
   `urlId` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`campaignId`,`urlId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `Influencer` (
   `regNumber` varchar(255) NOT NULL DEFAULT '',
@@ -36,7 +36,7 @@ CREATE TABLE `Influencer` (
   `loanAmount` int DEFAULT NULL,
   `registerDate` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`regNumber`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `Rides` (
   `rideId` varchar(255) NOT NULL DEFAULT '',
@@ -44,14 +44,14 @@ CREATE TABLE `Rides` (
   `rideDestination` varchar(255) DEFAULT NULL,
   `rideFare` int DEFAULT NULL,
   `rideDuration` int DEFAULT NULL,
-  `regNumber` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
+  `regNumber` varchar(255) NOT NULL DEFAULT '',
   `rideStartTime` timestamp NULL DEFAULT NULL,
   `rideEndTime` timestamp NULL DEFAULT NULL,
   `isActive` int DEFAULT NULL,
   PRIMARY KEY (`rideId`),
   KEY `regNumber` (`regNumber`),
   CONSTRAINT `rides_ibfk_1` FOREIGN KEY (`regNumber`) REFERENCES `Influencer` (`regNumber`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `Viewer` (
   `viewerId` varchar(255) NOT NULL DEFAULT '',
@@ -62,4 +62,4 @@ CREATE TABLE `Viewer` (
   PRIMARY KEY (`viewerId`),
   KEY `rideId` (`rideId`),
   CONSTRAINT `viewer_ibfk_1` FOREIGN KEY (`rideId`) REFERENCES `Rides` (`rideId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);

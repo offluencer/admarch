@@ -4,6 +4,8 @@ import com.admarch.model.Earnings;
 import com.admarch.model.Influencer;
 import com.admarch.model.LeaderBoard;
 import com.admarch.service.InfluencerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +18,11 @@ public class InfluencerController {
     @Autowired
     InfluencerService influencerService;
 
+    Logger logger = LoggerFactory.getLogger(LocationController.class);
+
     @RequestMapping(method = RequestMethod.GET, value="/{version:[v|V][0-9]+}/test")
     public String test(){
+        logger.info("test");
         return "Test";
     }
 
