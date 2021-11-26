@@ -2,13 +2,15 @@
 create database admarch;
 
 CREATE TABLE `Actions` (
-  `actionId` varchar(12) NOT NULL DEFAULT '',
+  `actionId` int NOT NULL AUTO_INCREMENT,
   `registerNumber` varchar(255) DEFAULT NULL,
   `actionDateTime` datetime DEFAULT NULL,
   `deviceId` varchar(255) DEFAULT NULL,
   `actionEarning` int DEFAULT NULL,
+  `campaignId` int NOT NULL,
   PRIMARY KEY (`actionId`),
   KEY `registerNumber` (`registerNumber`),
+  KEY `dev_` (`registerNumber`),
   CONSTRAINT `actions_ibfk_1` FOREIGN KEY (`registerNumber`) REFERENCES `Influencer` (`regNumber`)
 );
 
@@ -63,3 +65,22 @@ CREATE TABLE `Viewer` (
   KEY `rideId` (`rideId`),
   CONSTRAINT `viewer_ibfk_1` FOREIGN KEY (`rideId`) REFERENCES `Rides` (`rideId`)
 );
+
+CREATE TABLE `QRCodeInfo` (
+  `id` varchar(20) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `infuencerRegNo` varchar(255) NOT NULL,
+  `campaignId` int NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `QRCodeInfo_influencer_regNo` FOREIGN KEY (`infuencerRegNo`) REFERENCES `Influencer` (`regNumber`)
+);
+
+CREATE TABLE `UserInfo` (
+  `userId` varchar(255) NOT NULL,
+  `ipAddress` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`userId`)
+);
+
+insert into Influencer (regNumber) values ("8123825521");
+
+insert into QRCodeInfo values (1,"https://in.search.yahoo.com/?fr2=inr","8123825521",1);
