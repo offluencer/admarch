@@ -20,6 +20,10 @@ public class RideDetails implements Serializable {
     private Timestamp endRideTime;
     private int isActive;
     private int noOfPassengers;
+    private String rideDestinationLat;
+    private String rideDestinationLon;
+
+
 
     List<Viewer> viewers;
 }

@@ -34,12 +34,12 @@ public class InfluencerController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{version:[v|V][0-9]+}/earning")
-    public ResponseEntity<Earnings> getInfluencerEarnings(
+    public Earnings getInfluencerEarnings(
             @PathVariable("version") String version,
             @RequestParam(value = "nonce", required = false) String nonce,
             @RequestParam(value = "regNumber") String regNum
             ){
-        return new ResponseEntity<>(influencerService.getInfluencerEarning(regNum), HttpStatus.ACCEPTED);
+        return influencerService.getInfluencerEarning(regNum);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{version:[v|V][0-9]+}/ranking")
