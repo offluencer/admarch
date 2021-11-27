@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 
@@ -27,15 +28,17 @@ public class ActionServiceImpl implements ActionService {
     @Autowired
     private UserInfoRepository userInfoRepository;
 
+    @Autowired
+    private RequestService requestService;
 
     @Override
-    public void trackUserAction(String admarchUserId, String qrCodeId) {
+    public void trackUserAction(String admarchUserId, String qrCodeId,HttpServletRequest request) {
 
         QRCodeInfo qrCodeInfo = qrCodeInfoRepository.findById(qrCodeId);
         Actions actions = actionsRepository.findByregisterNumberAndDeviceIdAndCampaignId(qrCodeInfo.getInfluencerRegNo(),admarchUserId,qrCodeInfo.getCampaignId());
 
         if(actions==null)
-            saveActionAndUserInfo(qrCodeInfo,admarchUserId);
+            saveActionAndUserInfo(qrCodeInfo,admarchUserId,request);
     }
 
     private Actions constructActions(String regNo, String deviceId, int campaignId){
@@ -48,19 +51,21 @@ public class ActionServiceImpl implements ActionService {
         return actions;
     }
 
-    private UserInfo constructUserInfo(String userId, String ipAddress){
+    private UserInfo constructUserInfo(String userId, HttpServletRequest request){
         UserInfo userInfo = new UserInfo();
         userInfo.setUserId(userId);
+
+        String ipAddress = requestService.getClientIp(request);
         userInfo.setIpAddress(ipAddress);
         return userInfo;
     }
 
-    private void saveActionAndUserInfo(QRCodeInfo qrCodeInfo, String admarchUserId){
+    private void saveActionAndUserInfo(QRCodeInfo qrCodeInfo, String admarchUserId,HttpServletRequest request){
         // populate action object
         Actions actions = constructActions(qrCodeInfo.getInfluencerRegNo(),admarchUserId,qrCodeInfo.getCampaignId());
 
         // populate user info object
-        UserInfo userInfo = constructUserInfo(admarchUserId,"localhost"); // TODO - change the ip address
+        UserInfo userInfo = constructUserInfo(admarchUserId,request); // TODO - change the ip address
 
         // save action and user info
         // TODO : it has to be in a single transaction

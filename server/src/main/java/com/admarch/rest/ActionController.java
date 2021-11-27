@@ -2,6 +2,7 @@ package com.admarch.rest;
 
 import com.admarch.dao.QRCodeInfoRepository;
 import com.admarch.service.ActionService;
+import com.admarch.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -32,10 +33,11 @@ public class ActionController {
             admarchUserId = setAdmarchUserId(response);
 
         // track user action
-        actionService.trackUserAction(admarchUserId,qrCodeId);
+        actionService.trackUserAction(admarchUserId,qrCodeId,request);
 
-        // get re-direction url
-        String redirectURL = qrCodeInfoRepository.findById(qrCodeId).getUrl();
+        // get campaign url
+        // TODO - should move this to dao
+        String redirectURL = qrCodeInfoRepository.getCampaignUrl(qrCodeId);
 
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(redirectURL);

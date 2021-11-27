@@ -15,11 +15,10 @@ CREATE TABLE `Actions` (
 );
 
 CREATE TABLE `Campaign` (
-  `campaignId` varchar(255) NOT NULL DEFAULT '',
-  `regNumber` varchar(255) NOT NULL DEFAULT '',
-  `tinyUrl` varchar(255) DEFAULT NULL,
-  `urlId` int NOT NULL DEFAULT '1',
-  PRIMARY KEY (`campaignId`,`urlId`)
+  `campaignId` int NOT NULL AUTO_INCREMENT,
+  `tinyUrl` varchar(255) NOT NULL,
+  `actualUrl` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`campaignId`)
 );
 
 CREATE TABLE `Influencer` (
@@ -68,11 +67,11 @@ CREATE TABLE `Viewer` (
 
 CREATE TABLE `QRCodeInfo` (
   `id` varchar(20) NOT NULL,
-  `url` varchar(255) NOT NULL,
   `infuencerRegNo` varchar(255) NOT NULL,
   `campaignId` int NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `QRCodeInfo_influencer_regNo` FOREIGN KEY (`infuencerRegNo`) REFERENCES `Influencer` (`regNumber`)
+  CONSTRAINT `QRCodeInfo_influencer_regNo` FOREIGN KEY (`infuencerRegNo`) REFERENCES `Influencer` (`regNumber`),
+  CONSTRAINT `QRCodeInfo_influencer_campaignIf` FOREIGN KEY (`campaignId`) REFERENCES `Campaign` (`campaignId`)
 );
 
 CREATE TABLE `UserInfo` (
@@ -83,4 +82,5 @@ CREATE TABLE `UserInfo` (
 
 insert into Influencer (regNumber) values ("8123825521");
 
-insert into QRCodeInfo values (1,"https://in.search.yahoo.com/?fr2=inr","8123825521",1);
+insert into Campaign (campaignId,tinyUrl,actualUrl) values (1,"https://in.search.yahoo.com/?fr2=inr","https://in.search.yahoo.com/?fr2=inr")
+insert into QRCodeInfo values (1,"8123825521",1);
