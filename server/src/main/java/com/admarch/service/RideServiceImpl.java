@@ -37,6 +37,8 @@ public class RideServiceImpl implements RideService{
         existingRide.setEndRideTime(rideDetails.getEndRideTime());
         existingRide.setRideFare(rideDetails.getRideFare());
         existingRide.setIsActive(0);
+        existingRide.setRideDestinationLat(rideDetails.getRideDestinationLat());
+        existingRide.setRideDestinationLon(rideDetails.getRideDestinationLon());
 //        endRide.setRideId(rides.getRideId());
         rideRepository.save(existingRide);
         List<Viewer> viewerList = rideDetails.getViewers();

@@ -36,5 +36,13 @@ public class Rides implements Serializable {
     private Timestamp endRideTime;
     @Column(name = "isActive")
     private int isActive;
+    @Column(name = "rideDestinationLat")
+    private String rideDestinationLat;
+    @Column(name = "rideDestinationLon")
+    private String rideDestinationLon;
+    @Column(name = "rideSourceLat")
+    private String rideSourceLat;
+    @Column(name = "rideSourceLon")
+    private String rideSourceLon;
 
 }
