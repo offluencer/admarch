@@ -15,8 +15,8 @@ import java.util.List;
 @Transactional(readOnly = true, propagation = Propagation.REQUIRED, isolation= Isolation.READ_UNCOMMITTED)
 public interface ActionsRepository extends CrudRepository<Actions,Integer> {
 //    Rides findByregNumberAndIsActiveEquals(String regNumber, int isActive);
-    @Query("SELECT new com.admarch.model.LeaderBoard(a.registerNumber, SUM(a.actionEarning)) " +
-            "from Actions as a group by a.registerNumber ")
+    @Query("SELECT new com.admarch.model.LeaderBoard( a.registerNumber, SUM(a.actionEarning)) " +
+            "from Actions as a group by a.registerNumber order by SUM(a.actionEarning) desc")
     List<LeaderBoard> countTotalEarningsByRegisterNumber();
 
     @Query("SELECT new com.admarch.model.Earnings(a.registerNumber, COUNT(a.actionEarning) , SUM(a.actionEarning)) " +
