@@ -24,13 +24,16 @@ public class SessionManager {
     int PRIVATE_MODE = 0;
 
     // Sharedpref file name
-    private static final String PREF_NAME = "AndroidHivePref";
+    private static final String PREF_NAME = "Offluence";
 
     // All Shared Preferences Keys
     private static final String IS_LOGIN = "IsLoggedIn";
 
     // User name (make variable public to access from outside)
     public static final String KEY_NAME = "name";
+
+    public static final String KEY_ACTIVE_RIDE = "activeRideId";
+
 
     // Email address (make variable public to access from outside)
     public static final String KEY_EMAIL = "email";
@@ -58,6 +61,30 @@ public class SessionManager {
 
         // commit changes
         editor.commit();
+    }
+
+    public String getActiveRideInfo(){
+//        if(pref.contains(KEY_ACTIVE_RIDE)){
+        return pref.getString(KEY_ACTIVE_RIDE,"NORIDE");
+//        }
+//        editor.putString(KEY_ACTIVE_RIDE,rideId);
+//        return rideId;
+    }
+
+    public void removeActiveRideInfo(){
+        if(pref.contains(KEY_ACTIVE_RIDE)){
+            editor.remove(KEY_ACTIVE_RIDE);
+            editor.commit();
+
+        }
+    }
+    public void addActiveRideInfo(String rideId){
+//        if(pref.contains(KEY_ACTIVE_RIDE)){
+//            return pref.getString(KEY_ACTIVE_RIDE,"NORIDE");
+//        }
+        editor.putString(KEY_ACTIVE_RIDE,rideId);
+        editor.commit();
+//        return rideId;
     }
 
     /**

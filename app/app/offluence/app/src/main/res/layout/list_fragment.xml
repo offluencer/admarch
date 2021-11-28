@@ -77,54 +77,73 @@
 <!--        app:layout_constraintStart_toStartOf="parent"-->
 <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
+<!--    <LinearLayout-->
+<!--        android:id="@+id/relativeLayout1"-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/black"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.009"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0"-->
+<!--        >-->
+
+<!--        <TextView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="5dp"-->
+<!--            android:text="Rank"-->
+<!--            android:textColor="#ffffff" />-->
+
+<!--        <TextView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="2"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="5dp"-->
+<!--            android:text="Name"-->
+<!--            android:textColor="#ffffff" />-->
+
+<!--        <TextView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1.5"-->
+<!--            android:gravity="center"-->
+<!--            android:padding="5dp"-->
+<!--            android:text="Conversions"-->
+<!--            android:textColor="#ffffff" />-->
+
+<!--    </LinearLayout>-->
+
+<!--    <ListView-->
+<!--        android:id = "@+id/list"-->
+<!--        android:layout_width = "match_parent"-->
+<!--        android:layout_height = "wrap_content"-->
+<!--        android:divider = "@null"-->
+<!--        tools:ignore="MissingConstraints" />-->
+
     <LinearLayout
-        android:id="@+id/relativeLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.009"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0"
-        >
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="Rank"
-            android:textColor="#ffffff" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="Name"
-            android:textColor="#ffffff" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="Conversions"
-            android:textColor="#ffffff" />
-
+            android:id="@android:id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </TextView>
     </LinearLayout>
-
-    <ListView
-        android:id = "@+id/list"
-        android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"
-        android:divider = "@null"
-        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

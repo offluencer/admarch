@@ -12,6 +12,7 @@ import com.admarch.offluence.RideLayout;
 import com.admarch.offluence.model.LoginResponse;
 import com.admarch.offluence.model.Ride;
 import com.admarch.offluence.rest.APIClient;
+import com.admarch.offluence.utils.FileUtil;
 import com.admarch.offluence.utils.SessionManager;
 
 import java.text.SimpleDateFormat;
@@ -35,13 +36,13 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        rideId = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         startTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date());
 
         session = new SessionManager(getContext());
 
         Map userDetails = session.getUserDetails();
         regNumber = (String) userDetails.get(session.KEY_NAME);
+        rideId = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+"_"+regNumber;
         Button startBtn = view.findViewById(R.id.startRide);
 
         startBtn.setOnClickListener(new View.OnClickListener() {
@@ -71,14 +72,15 @@ private void startRide(){
         @Override
         public void onResponse(Call<Ride> call, Response<Ride> response) {
             Ride ride1 = response.body();
-
             if (ride1 != null) {
-
+                session.addActiveRideInfo(rideId);
             }
         }
 
         @Override
         public void onFailure(Call<Ride> call, Throwable t) {
+            FileUtil.writeToInternalStorage(ride.toString(), getContext());
+
             call.cancel();
         }
     });

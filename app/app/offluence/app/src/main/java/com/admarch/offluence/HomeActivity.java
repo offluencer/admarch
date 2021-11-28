@@ -1,8 +1,11 @@
 package com.admarch.offluence;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.admarch.offluence.fragments.FragmentChangeListener;
+import com.admarch.offluence.utils.BackgroundLocationUpdateService;
+import com.admarch.offluence.utils.LocationService;
 import com.admarch.offluence.utils.SectionPageAdapter;
 import com.admarch.offluence.utils.SessionManager;
 import com.google.android.material.tabs.TabLayout;
@@ -20,7 +23,11 @@ public class HomeActivity extends AppCompatActivity  {
     SessionManager session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        startService(new Intent(this.getApplicationContext(), LocationService.class));
+
         session = new SessionManager(getApplicationContext());
+
 
         session.checkLogin();
         super.onCreate(savedInstanceState);
@@ -28,12 +35,13 @@ public class HomeActivity extends AppCompatActivity  {
         tabLayout=(TabLayout)findViewById(R.id.tabLayout);
         viewPager=(ViewPager)findViewById(R.id.viewPager);
         tabLayout.addTab(tabLayout.newTab().setText("Home"));
-        tabLayout.addTab(tabLayout.newTab().setText("Leaderboard"));
         tabLayout.addTab(tabLayout.newTab().setText("Profile"));
+        tabLayout.addTab(tabLayout.newTab().setText("LeaderBoard"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         final SectionPageAdapter adapter = new SectionPageAdapter(this,getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

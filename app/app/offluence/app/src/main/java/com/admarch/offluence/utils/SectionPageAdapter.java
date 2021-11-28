@@ -3,8 +3,10 @@ package com.admarch.offluence.utils;
 import android.content.Context;
 
 import com.admarch.offluence.fragments.HomeFragment;
+import com.admarch.offluence.fragments.LeaderBoardFragment;
 import com.admarch.offluence.fragments.LeaderFragment;
 import com.admarch.offluence.fragments.ProfileFragment;
+import com.admarch.offluence.model.LeaderBoard;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -29,11 +31,11 @@ public class SectionPageAdapter extends FragmentPagerAdapter {
                 HomeFragment homeFragment = new HomeFragment();
                 return homeFragment;
             case 1:
-                LeaderFragment leaderFragment = new LeaderFragment();
-                return leaderFragment;
-            case 2:
                 ProfileFragment profileFragment = new ProfileFragment();
                 return profileFragment;
+            case 2:
+                LeaderFragment leaderFragment = new LeaderFragment();
+                return leaderFragment;
             default:
                 return null;
         }

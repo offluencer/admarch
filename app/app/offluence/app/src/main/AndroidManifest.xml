@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.admarch.offluence">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -26,9 +27,18 @@
         <activity android:name=".LoginActivity">
 
         </activity>
+        <service android:name=".utils.LocationService"/>
+        <service android:name=".utils.GPSTracker"
+            tools:ignore="Instantiatable" />
+
+
     </application>
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
 
 </manifest>

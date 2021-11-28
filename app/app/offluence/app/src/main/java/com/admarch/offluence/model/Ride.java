@@ -37,4 +37,8 @@ public class Ride {
         return isActive;
     }
 
+    @Override
+    public String toString() {
+        return "{\"regNumber\":\"" + regNumber  + "\", \"rideId\":\"" + rideId + "\",\" startRideTime:\"" + startRideTime  + "\", \"isActive\":\"" + isActive + "\"}";
+    }
 }

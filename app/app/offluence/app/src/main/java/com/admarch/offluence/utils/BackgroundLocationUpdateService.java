@@ -1,3 +1,5 @@
+package com.admarch.offluence.utils;
+
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -16,12 +18,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+//import android.support.v4.app.NotificationCompat;
+//import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.admarch.offluence.HomeActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.ApiException;
@@ -36,11 +40,12 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.tasks.OnCanceledListener;
+//import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.concurrent.TimeUnit;
+
 
 /**
  * Created by Ketan Ramani on 05/11/18.
@@ -76,7 +81,7 @@ public class BackgroundLocationUpdateService extends Service implements GoogleAp
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        StartForeground();
+//        StartForeground();
         final Handler handler = new Handler();
         final Runnable runnable = new Runnable() {
 
@@ -105,7 +110,7 @@ public class BackgroundLocationUpdateService extends Service implements GoogleAp
 
     @Override
     public void onDestroy() {
-        Log.e(TAG, "Service Stopped");
+//        Log.e(TAG, "Service Stopped");
         stopService = true;
         if (mFusedLocationClient != null) {
             mFusedLocationClient.removeLocationUpdates(mLocationCallback);
@@ -114,42 +119,42 @@ public class BackgroundLocationUpdateService extends Service implements GoogleAp
         super.onDestroy();
     }
 
-    @Nullable
+    //    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
     private void StartForeground() {
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
 
         String CHANNEL_ID = "channel_location";
         String CHANNEL_NAME = "channel_location";
 
-        NotificationCompat.Builder builder = null;
-        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-            notificationManager.createNotificationChannel(channel);
-            builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
-            builder.setChannelId(CHANNEL_ID);
-            builder.setBadgeIconType(NotificationCompat.BADGE_ICON_NONE);
-        } else {
-            builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
-        }
-
-        builder.setContentTitle("Your title");
-        builder.setContentText("You are now online");
-        Uri notificationSound = RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_NOTIFICATION);
-        builder.setSound(notificationSound);
-        builder.setAutoCancel(true);
-        builder.setSmallIcon(R.drawable.ic_logo);
-        builder.setContentIntent(pendingIntent);
-        Notification notification = builder.build();
-        startForeground(101, notification);
+//        NotificationCompat.Builder builder = null;
+//        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+//            channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+//            notificationManager.createNotificationChannel(channel);
+//            builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
+//            builder.setChannelId(CHANNEL_ID);
+//            builder.setBadgeIconType(NotificationCompat.BADGE_ICON_NONE);
+//        } else {
+//            builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
+//        }
+//
+//        builder.setContentTitle("Your title");
+//        builder.setContentText("You are now online");
+//        Uri notificationSound = RingtoneManager.getActualDefaultRingtoneUri(this, RingtoneManager.TYPE_NOTIFICATION);
+//        builder.setSound(notificationSound);
+//        builder.setAutoCancel(true);
+//        builder.setSmallIcon(R.drawable.ic_logo);
+//        builder.setContentIntent(pendingIntent);
+//        Notification notification = builder.build();
+//        startForeground(101, notification);
     }
 
     @Override
@@ -176,4 +181,97 @@ public class BackgroundLocationUpdateService extends Service implements GoogleAp
 
     }
 
-    @
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10 * 1000);
+        mLocationRequest.setFastestInterval(5 * 1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        builder.addLocationRequest(mLocationRequest);
+        builder.setAlwaysShow(true);
+        mLocationSettingsRequest = builder.build();
+
+        mSettingsClient
+                .checkLocationSettings(mLocationSettingsRequest)
+                .addOnSuccessListener(new OnSuccessListener<LocationSettingsResponse>() {
+                    @Override
+                    public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                        Log.e(TAG_LOCATION, "GPS Success");
+                        requestLocationUpdate();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                int statusCode = ((ApiException) e).getStatusCode();
+                switch (statusCode) {
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        try {
+                            int REQUEST_CHECK_SETTINGS = 214;
+                            ResolvableApiException rae = (ResolvableApiException) e;
+
+
+//                            rae.startResolutionForResult( , REQUEST_CHECK_SETTINGS);
+                        } catch (Exception sie) {
+                            Log.e(TAG_LOCATION, "Unable to execute request.");
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        Log.e(TAG_LOCATION, "Location settings are inadequate, and cannot be fixed here. Fix in Settings.");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        connectGoogleClient();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        buildGoogleApiClient();
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
+        mSettingsClient = LocationServices.getSettingsClient(context);
+
+        mGoogleApiClient = new GoogleApiClient.Builder(context)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+
+        connectGoogleClient();
+
+        mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+                Log.e(TAG_LOCATION, "Location Received");
+                mCurrentLocation = locationResult.getLastLocation();
+                onLocationChanged(mCurrentLocation);
+            }
+        };
+    }
+
+    private void connectGoogleClient() {
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        int resultCode = googleAPI.isGooglePlayServicesAvailable(context);
+        if (resultCode == ConnectionResult.SUCCESS) {
+            mGoogleApiClient.connect();
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void requestLocationUpdate() {
+        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+    }
+}

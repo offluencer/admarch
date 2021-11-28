@@ -4,52 +4,60 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.admarch.offluence.R;
 import com.admarch.offluence.model.LeaderBoard;
 import com.admarch.offluence.utils.ListViewAdapter;
+import com.admarch.offluence.utils.SessionManager;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
 
-public class ListFragment extends Fragment {
+public class LeaderBoardFragment extends ListFragment implements AdapterView.OnItemClickListener {
     private ArrayList<LeaderBoard> rankList;
+    SessionManager session;
 
-//    public LeaderFragment() {
-//        super(R.layout.tab2_fragment);
-//    }
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rankList = new ArrayList<>();
-        View rootView = inflater.inflate(R.layout.tab2_fragment,
-                container, false);
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.list_fragment, container, false);
+        session = new SessionManager(getContext());
 
-        ListView lview = (ListView) rootView.findViewById(R.id.list);
-        ListViewAdapter adapter = new ListViewAdapter(getActivity(), rankList);
-        lview.setAdapter(adapter);
+        Map userDetails = session.getUserDetails();
+
+        String regNumber = (String) userDetails.get(session.KEY_NAME);
+
+        return view;
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+//        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(),
+//                R.array.Planets, android.R.layout.simple_list_item_1);
+        rankList = new ArrayList<>();
         populateList();
 
-        return rootView;
+        ListViewAdapter adapter = new ListViewAdapter(getContext(), rankList);
+        setListAdapter(adapter);
+//        setListAdapter(adapter);
+//        getListView().setOnItemClickListener(this);
     }
 
-//    @Override
-//    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-//        rankList = new ArrayList<>();
-//        ListView lview = (ListView) view.findViewById(R.id.listview);
-//        ListViewAdapter adapter = new ListViewAdapter(this.getActivity(), rankList);
-//        lview.setAdapter(adapter);
-//        populateList();
-//
-////        adapter.notifyDataSetChanged();
-//
-//    }
-
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(getActivity(), "Item: " + position, Toast.LENGTH_SHORT).show();
+    }
 
     private void populateList() {
 
@@ -69,5 +77,9 @@ public class ListFragment extends Fragment {
 
         item5 = new LeaderBoard("5", "Banana (Cavendish)", "100");
         rankList.add(item5);
+    }
+
+    private void fillRankingsData(String regNumber, View view) {
+
     }
 }
