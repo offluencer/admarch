@@ -18,9 +18,6 @@ public class QRCodeInfo {
     @Column(name = "id")
     private String id;
 
-    @Column(name = "url")
-    private String url;
-
     @Column(name = "infuencerRegNo")
     private String influencerRegNo;
 
