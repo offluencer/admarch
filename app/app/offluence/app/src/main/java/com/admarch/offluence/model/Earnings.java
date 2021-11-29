@@ -1,23 +1,16 @@
 package com.admarch.offluence.model;
 
 public class Earnings {
-    String rank;
     String registerNumber;
-    String actionEarning;
+    int conversionCount;
+    int conversionEarning;
 
-
-    public Earnings(String rank, String registerNumber, String actionEarning){
-        this.rank = rank;
-        this.registerNumber = registerNumber;
-        this.actionEarning = actionEarning;
+    public int getConversionCount() {
+        return conversionCount;
     }
 
-    public String getRank() {
-        return rank;
-    }
-
-    public String getActionEarning() {
-        return actionEarning;
+    public int getConversionEarning() {
+        return conversionEarning;
     }
 
     public String getRegisterNumber() {

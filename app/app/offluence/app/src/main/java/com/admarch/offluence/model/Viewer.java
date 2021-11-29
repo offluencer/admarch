@@ -14,4 +14,9 @@ public class Viewer {
         this.gender = gender;
         this.avgAge = avgAge;
     }
+
+    @Override
+    public String toString() {
+        return "{\"gender\":\"" + gender + "\"," + ", \"avgAge\":\"" + avgAge + "\"" + "}";
+    }
 }

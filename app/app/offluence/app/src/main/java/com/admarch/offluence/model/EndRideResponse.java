@@ -24,6 +24,11 @@ public class EndRideResponse {
     @SerializedName("isActive")
     public int isActive;
 
+    @SerializedName("rideDestinationLat")
+    public String rideDestinationLat;
+    @SerializedName("rideDestinationLon")
+    public String rideDestinationLon;
+
 
     public EndRideResponse(String regNumber,
                            String rideId,
@@ -60,8 +65,20 @@ public class EndRideResponse {
         return isActive;
     }
 
+    public void setRideDestinationLat(String rideDestinationLat){
+        this.rideDestinationLat = rideDestinationLat;
+    }
+
+    public void setRideDestinationLon(String rideDestinationLon) {
+        this.rideDestinationLon = rideDestinationLon;
+    }
+
     public void setViewers(List<Viewer> viewers){
         this.viewers = viewers;
     }
 
+    @Override
+    public String toString() {
+        return "{" + "\"regNumber\":\"" + regNumber + "\"" + ", \"rideId\":\"" + rideId + "\"" + ", \"endRideTime\":\"" + endRideTime + "\"" + ", \"rideDuration\":\"" + rideDuration + "\"" + ", \"rideFare\":\"" + rideFare + "\"" + ", \"noOfPassengers:\":\"" + noOfPassengers + "\"" + ", \"viewers\":" + viewers + ", \"isActive\":\"" + isActive + "\", \"rideDestinationLat\":\"" + rideDestinationLat + "\"" + ", \"rideDestinationLon\":\"" + rideDestinationLon + '\"' + '}';
+    }
 }

@@ -45,14 +45,21 @@ CREATE TABLE `Rides` (
   `rideDestination` varchar(255) DEFAULT NULL,
   `rideFare` int DEFAULT NULL,
   `rideDuration` int DEFAULT NULL,
-  `regNumber` varchar(255) NOT NULL DEFAULT '',
+  `regNumber` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '',
   `rideStartTime` timestamp NULL DEFAULT NULL,
   `rideEndTime` timestamp NULL DEFAULT NULL,
   `isActive` int DEFAULT NULL,
+  `rideSourceLat` varchar(255) DEFAULT NULL,
+  `rideSourceLon` varchar(255) DEFAULT NULL,
+  `rideDestinationLon` varchar(255) DEFAULT NULL,
+  `rideDestinationLat` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`rideId`),
   KEY `regNumber` (`regNumber`),
   CONSTRAINT `rides_ibfk_1` FOREIGN KEY (`regNumber`) REFERENCES `Influencer` (`regNumber`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |Y `regNumber` (`regNumber`),
+  CONSTRAINT `rides_ibfk_1` FOREIGN KEY (`regNumber`) REFERENCES `Influencer` (`regNumber`)
 );
+
 
 CREATE TABLE `Viewer` (
   `viewerId` varchar(255) NOT NULL DEFAULT '',
