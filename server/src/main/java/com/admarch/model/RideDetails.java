@@ -22,7 +22,8 @@ public class RideDetails implements Serializable {
     private int noOfPassengers;
     private String rideDestinationLat;
     private String rideDestinationLon;
-
+    private String rideSourceLat;
+    private String rideSourceLon;
 
 
     List<Viewer> viewers;

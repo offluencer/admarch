@@ -31,7 +31,7 @@ public class RideServiceImpl implements RideService{
     public void endRide(RideDetails rideDetails) {
 //        Rides rides = rideRepository.findByregNumberAndIsActiveEquals(rideDetails.getRides().getRegNumber(),
 //                1);
-        Rides existingRide = rideRepository.findOne(rideDetails.getRideId());
+        Rides existingRide = new Rides();
         existingRide.setRideId(rideDetails.getRideId());
         existingRide.setRegNumber(rideDetails.getRegNumber());
         existingRide.setEndRideTime(rideDetails.getEndRideTime());
@@ -39,6 +39,9 @@ public class RideServiceImpl implements RideService{
         existingRide.setIsActive(0);
         existingRide.setRideDestinationLat(rideDetails.getRideDestinationLat());
         existingRide.setRideDestinationLon(rideDetails.getRideDestinationLon());
+        existingRide.setRideSourceLat(rideDetails.getRideSourceLat());
+        existingRide.setRideSourceLon(rideDetails.getRideSourceLon());
+        existingRide.setStartRideTime(rideDetails.getStartRideTime());
 //        endRide.setRideId(rides.getRideId());
         rideRepository.save(existingRide);
         List<Viewer> viewerList = rideDetails.getViewers();
