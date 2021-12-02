@@ -15,7 +15,6 @@ import org.apache.commons.dbcp.BasicDataSource;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-//@ImportResource(value = { "classpath:application-config.xml"})
 public class AdmarchApplication extends SpringBootServletInitializer {
     private static final Class<AdmarchApplication> applicationClass = AdmarchApplication.class;
     private static final Logger logger = LoggerFactory.getLogger(applicationClass);
