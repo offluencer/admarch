@@ -28,7 +28,24 @@ public class EndRideResponse {
     public String rideDestinationLat;
     @SerializedName("rideDestinationLon")
     public String rideDestinationLon;
+    @SerializedName("rideSourceLat")
+    public String rideSourceLat;
+    @SerializedName("rideSourceLon")
+    public String rideSourceLon;
+    @SerializedName("startRideTime")
+    public String startRideTime;
 
+    public void setRideSourceLon(String rideSourceLon) {
+        this.rideSourceLon = rideSourceLon;
+    }
+
+    public void setRideSourceLat(String rideSourceLat) {
+        this.rideSourceLat = rideSourceLat;
+    }
+
+    public void setStartRideTime(String startRideTime) {
+        this.startRideTime = startRideTime;
+    }
 
     public EndRideResponse(String regNumber,
                            String rideId,

@@ -21,6 +21,8 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.admarch.offluence.R;
+
 import androidx.core.app.ActivityCompat;
 
 /**
@@ -112,9 +114,23 @@ public class GPSTracker extends Service implements LocationListener {
                 provider_info = LocationManager.NETWORK_PROVIDER;
 
             }
+//            if(provider_info == null){
+//                    // notify user
+//                    new AlertDialog.Builder(mContext)
+//                            .setMessage("GPS not enabled!")
+//                            .setPositiveButton("Open Location Setting", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+//                                    mContext.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+//                                }
+//                            })
+//                                    .setNegativeButton("Cancel",null)
+//                                    .show();
+//
+//            }
 
             // Application can use GPS or Network Provider
-            if (!provider_info.isEmpty()) {
+            if (provider_info!=null && !provider_info.isEmpty()) {
                 if (ActivityCompat.checkSelfPermission(this.mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                         && ActivityCompat.checkSelfPermission(this.mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
@@ -124,6 +140,8 @@ public class GPSTracker extends Service implements LocationListener {
                     //                                          int[] grantResults)
                     // to handle the case where the user grants the permission. See the documentation
                     // for ActivityCompat#requestPermissions for more details.
+
+
                     return;
                 }
                 locationManager.requestLocationUpdates(

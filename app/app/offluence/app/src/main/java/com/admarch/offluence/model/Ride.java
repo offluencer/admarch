@@ -12,6 +12,11 @@ public class Ride {
     public String startRideTime;
     @SerializedName("isActive")
     public int isActive;
+    @SerializedName("rideSourceLat")
+    private String rideSourceLat;
+    @SerializedName("rideSourceLon")
+    private String rideSourceLon;
+
 
 
     public Ride(String regNumber,
@@ -35,6 +40,14 @@ public class Ride {
     }
     public int getIsActive() {
         return isActive;
+    }
+
+    public void setRideSourceLat(String rideSourceLat) {
+        this.rideSourceLat = rideSourceLat;
+    }
+
+    public void setRideSourceLon(String rideSourceLon) {
+        this.rideSourceLon = rideSourceLon;
     }
 
     @Override

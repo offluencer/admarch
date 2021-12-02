@@ -15,9 +15,9 @@ import retrofit2.http.POST;
  */
 public class APIClient {
 
-//    private static final String SERVER_PATH = "http://10.0.2.2:8080/admarch/";
-    private static final String SERVER_PATH = "http://54.167.96.193:8080/admarch/";
-
+    private static final String SERVER_PATH = "http://10.0.2.2:8080/admarch/";
+//    private static final String SERVER_PATH = "http://54.167.96.193:8080/admarch/";
+//
     private static Retrofit retrofit;
     private APIInterface myApi;
     private static APIClient instance = null;

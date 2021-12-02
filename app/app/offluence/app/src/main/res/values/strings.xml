@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">Offluence</string>
-    <string-array name="Planets">
-        <item>KA02MP4258 30</item>
-        <item>TESTPO1234 100</item>
+    <string name="passenger_prompt">Choose no of passengers</string>
 
+    <string-array name="passenger_count_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
     </string-array>
 </resources>

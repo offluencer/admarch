@@ -33,6 +33,9 @@ public class SessionManager {
     public static final String KEY_NAME = "name";
 
     public static final String KEY_ACTIVE_RIDE = "activeRideId";
+    public static final String KEY_ACTIVE_RIDE_START_TIME = "activeStartTime";
+    public static final String KEY_ACTIVE_RIDE_LAT = "sourceLat";
+    public static final String KEY_ACTIVE_RIDE_LON = "sourceLon";
 
 
     // Email address (make variable public to access from outside)
@@ -70,19 +73,47 @@ public class SessionManager {
 //        editor.putString(KEY_ACTIVE_RIDE,rideId);
 //        return rideId;
     }
-
+    public String getKeyActiveRideStartTime(){
+//        if(pref.contains(KEY_ACTIVE_RIDE)){
+        return pref.getString(KEY_ACTIVE_RIDE_START_TIME,"NORIDE");
+//        }
+//        editor.putString(KEY_ACTIVE_RIDE,rideId);
+//        return rideId;
+    }
+    public String getKeyActiveRideLat(){
+//        if(pref.contains(KEY_ACTIVE_RIDE)){
+        return pref.getString(KEY_ACTIVE_RIDE_LAT,"NORIDE");
+//        }
+//        editor.putString(KEY_ACTIVE_RIDE,rideId);
+//        return rideId;
+    }
+    public String getKeyActiveRideLon(){
+//        if(pref.contains(KEY_ACTIVE_RIDE)){
+        return pref.getString(KEY_ACTIVE_RIDE_LON,"NORIDE");
+//        }
+//        editor.putString(KEY_ACTIVE_RIDE,rideId);
+//        return rideId;
+    }
     public void removeActiveRideInfo(){
         if(pref.contains(KEY_ACTIVE_RIDE)){
             editor.remove(KEY_ACTIVE_RIDE);
+            editor.remove(KEY_ACTIVE_RIDE_START_TIME);
+            editor.remove(KEY_ACTIVE_RIDE_LAT);
+            editor.remove(KEY_ACTIVE_RIDE_LON);
+
             editor.commit();
 
         }
     }
-    public void addActiveRideInfo(String rideId){
+    public void addActiveRideInfo(String rideId,String startDateTime,String sourceLat, String sourceLon){
 //        if(pref.contains(KEY_ACTIVE_RIDE)){
 //            return pref.getString(KEY_ACTIVE_RIDE,"NORIDE");
 //        }
         editor.putString(KEY_ACTIVE_RIDE,rideId);
+        editor.putString(KEY_ACTIVE_RIDE_START_TIME,startDateTime);
+        editor.putString(KEY_ACTIVE_RIDE_LAT,sourceLat);
+        editor.putString(KEY_ACTIVE_RIDE_LON,sourceLon);
+
         editor.commit();
 //        return rideId;
     }

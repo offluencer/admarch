@@ -8,6 +8,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +40,7 @@ public class RideLayout extends Activity implements View.OnClickListener {
     private Button endRide;
     private static final String ADD = "add";
     private int clickCount=0;
-    private TextView passengerInfo;
+    private Spinner passengerInfo;
 
     ImageButton add_m_5_16;
     ImageButton add_f_5_16;
@@ -85,7 +86,7 @@ public class RideLayout extends Activity implements View.OnClickListener {
 
             }
         });
-        passengerInfo = (TextView) findViewById(R.id.viewer_count);
+        passengerInfo = (Spinner) findViewById(R.id.spinner1);
 
         add_m_5_16 = (ImageButton)findViewById(R.id.add_m_5_16);
         add_m_5_16.setOnClickListener(this);
@@ -142,7 +143,7 @@ public class RideLayout extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        String passengers = passengerInfo.getText().toString();
+        String passengers = String.valueOf(passengerInfo.getSelectedItem());//passengerInfo.getText().toString();
         if(passengers.isEmpty()){
             Toast.makeText(getApplicationContext(),"Please enter total passengers", Toast.LENGTH_LONG);
             return;
@@ -335,13 +336,26 @@ public class RideLayout extends Activity implements View.OnClickListener {
         EndRideResponse endRideResponse = new EndRideResponse(user.get(SessionManager.KEY_NAME).toString(),
                 rideId,endTime,0
                 );
-        TextView nOfPassaenger  = (TextView)findViewById(R.id.viewer_count);
+//        TextView nOfPassaenger  = (TextView)findViewById(R.id.viewer_count);
+//        if(String.valueOf(passengerInfo.getSelectedItem()) == null || String.valueOf(passengerInfo.getSelectedItem());.isEmpty()){
+//            Toast.makeText(this,"Enter number of passenger",Toast.LENGTH_LONG).show();
+//            return Boolean.FALSE;
+//
+//        }
 
-        endRideResponse.setNoOfPassengers(nOfPassaenger.getText().toString());
+        endRideResponse.setNoOfPassengers(String.valueOf(passengerInfo.getSelectedItem()));
         TextView fare = (TextView)findViewById(R.id.fare);
+        if(fare.getText() == null || fare.getText().toString().isEmpty()){
+            Toast.makeText(this,"Enter fare",Toast.LENGTH_LONG).show();
+            return Boolean.FALSE;
+
+        }
+
         endRideResponse.setRideFare(fare.getText().toString());
-        List<Viewer> viewers = getAdViewerList(nOfPassaenger.getText().toString());
-        if(viewers == null){
+
+        List<Viewer> viewers = getAdViewerList(String.valueOf(passengerInfo.getSelectedItem()));
+        if(viewers == null || viewers.size() != Integer.parseInt(String.valueOf(passengerInfo.getSelectedItem()))){
+            Toast.makeText(this,"Add passenger details",Toast.LENGTH_LONG).show();
             return Boolean.FALSE;
         }
         endRideResponse.setViewers(viewers);
@@ -351,6 +365,9 @@ public class RideLayout extends Activity implements View.OnClickListener {
             endRideResponse.setRideDestinationLon(String.valueOf(gpsTracker.getLongitude()));
         }
 
+        endRideResponse.setRideSourceLat(sessionManager.getKeyActiveRideLat());
+        endRideResponse.setRideSourceLon(sessionManager.getKeyActiveRideLon());
+        endRideResponse.setStartRideTime(sessionManager.getKeyActiveRideStartTime());
         Call<EndRideResponse> call1 = APIClient.getInstance().getMyApi().endRide(endRideResponse);
         call1.enqueue(new Callback<EndRideResponse>() {
             @Override
@@ -358,7 +375,7 @@ public class RideLayout extends Activity implements View.OnClickListener {
                 EndRideResponse endRideResponse1 = response.body();
 
                 if (endRideResponse1 != null) {
-                    Toast.makeText(getApplicationContext(),"Successfully sent", Toast.LENGTH_LONG);
+                    Toast.makeText(getApplicationContext(),"Ride details successfully sent", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -366,7 +383,7 @@ public class RideLayout extends Activity implements View.OnClickListener {
             @Override
             public void onFailure(Call<EndRideResponse> call, Throwable t) {
                 FileUtil.writeToInternalStorage(endRideResponse.toString(),getApplicationContext());
-                Toast.makeText(getApplicationContext(),"Failed to send", Toast.LENGTH_LONG);
+                Toast.makeText(getApplicationContext(),"Network unavailable", Toast.LENGTH_LONG).show();
 
                 call.cancel();
             }
@@ -375,7 +392,7 @@ public class RideLayout extends Activity implements View.OnClickListener {
     }
     private List<Viewer> getAdViewerList(String noOfPassengers){
         if(noOfPassengers.isEmpty()){
-            Toast.makeText(getApplicationContext(),"Please enter total passengers", Toast.LENGTH_LONG);
+            Toast.makeText(getApplicationContext(),"Please enter number of passengers", Toast.LENGTH_SHORT).show();
             return null;
         }
 
@@ -453,4 +470,10 @@ public class RideLayout extends Activity implements View.OnClickListener {
         }
         return viewers;
             }
+
+    @Override
+    public void onBackPressed() {
+// super.onBackPressed();
+// Not calling **super**, disables back button in current screen.
+    }
 }
