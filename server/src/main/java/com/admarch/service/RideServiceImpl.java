@@ -1,6 +1,5 @@
 package com.admarch.service;
 
-import com.admarch.dao.InfluencerRepository;
 import com.admarch.dao.RideRepository;
 import com.admarch.dao.ViewerRepository;
 import com.admarch.model.*;
@@ -28,7 +27,7 @@ public class RideServiceImpl implements RideService{
     }
 
     @Override
-    public void endRide(RideDetails rideDetails) {
+    public void saveRide(RideDetails rideDetails) {
 //        Rides rides = rideRepository.findByregNumberAndIsActiveEquals(rideDetails.getRides().getRegNumber(),
 //                1);
         Rides existingRide = new Rides();
@@ -59,5 +58,10 @@ public class RideServiceImpl implements RideService{
         viewerRepository.save(viewers);
     }
 
-
+    // TODO: refactor this - db call is done for each ride
+    @Override
+    public void saveRides(List<RideDetails> rideDetails) {
+        for(RideDetails ride: rideDetails)
+            saveRide(ride);
+    }
 }

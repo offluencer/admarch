@@ -5,8 +5,11 @@ import com.admarch.model.RideDetails;
 import com.admarch.model.Rides;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public interface RideService {
     void startRide(Rides rides);
-    void endRide(RideDetails rideDetails);
+    void saveRide(RideDetails rideDetails);
+    void saveRides(List<RideDetails> rideDetails);
 }
