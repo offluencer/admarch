@@ -16,4 +16,9 @@ public class Location {
         this.longitude = longitude;
         this.timestamp = timestamp;
     }
+
+    @Override
+    public String toString() {
+        return "{" + "latitude:" + latitude + ", longitude:" + longitude + ", timestamp:" + timestamp + '}';
+    }
 }

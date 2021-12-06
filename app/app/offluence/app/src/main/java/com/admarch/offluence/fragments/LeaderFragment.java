@@ -1,9 +1,11 @@
 package com.admarch.offluence.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.admarch.offluence.R;
@@ -11,6 +13,7 @@ import com.admarch.offluence.model.Earnings;
 import com.admarch.offluence.model.LeaderBoard;
 import com.admarch.offluence.rest.APIClient;
 import com.admarch.offluence.utils.ListViewAdapter;
+import com.admarch.offluence.utils.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,7 @@ import retrofit2.Response;
 
 public class LeaderFragment extends Fragment {
     private ArrayList<LeaderBoard> rankList;
+    SessionManager sessionManager;
 
     public LeaderFragment() {
         super(R.layout.tab2_fragment);
@@ -51,14 +55,31 @@ public class LeaderFragment extends Fragment {
 //    }
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        sessionManager = new SessionManager(view.getContext());
+        String regNumber = sessionManager.getUserDetails().get(SessionManager.KEY_NAME);
         rankList = new ArrayList<>();
         ListView lview = (ListView) view.findViewById(R.id.list_view);
 
         ListViewAdapter adapter = new ListViewAdapter(getContext(), rankList);
         lview.setAdapter(adapter);
 
-        fillEarningsData(adapter);
+        fillEarningsData(adapter, regNumber, lview);
         adapter.notifyDataSetChanged();
+//        lview.setOnTouchListener();
+//        lview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+////view.setBackgroundColor(Color.RED);
+//
+//                for(int i=0; i<parent.getChildCount(); i++)
+//                {
+//                    if(i == position)
+//                    {
+//                        parent.getChildAt(i).setBackgroundColor(Color.GREEN);
+//                    }else{
+//                        parent.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
+//                    }
+//                }}});
+
 
     }
 
@@ -84,20 +105,34 @@ public class LeaderFragment extends Fragment {
 //        fillEarningsData();
     }
 
-    private void fillEarningsData(ListViewAdapter adapter) {
+    private void fillEarningsData(ListViewAdapter adapter, String regNumber, ListView listView) {
         try {
             Call<List<LeaderBoard>> call = APIClient.getInstance().getMyApi().getLeaderBoard();
             call.enqueue(new Callback<List<LeaderBoard>>() {
                 @Override
                 public void onResponse(Call<List<LeaderBoard>> call, Response<List<LeaderBoard>> response) {
+                    int currItem = -1;
                     List<LeaderBoard> leaderBoard = response.body();
                     int rank = 1;
                     for(LeaderBoard leader : leaderBoard){
                         leader.setRank(String.valueOf(rank));
+                        if(leader.getRegisterNumber().equalsIgnoreCase(regNumber)){
+                            currItem = rank;
+                        }
                         rank++;
+
+
                         rankList.add(leader);
                     }
+
                     adapter.notifyDataSetChanged();
+                    if(currItem != -1){
+                        adapter.setCurrItem(currItem-1);
+                    }
+
+
+
+
 
 
                 }

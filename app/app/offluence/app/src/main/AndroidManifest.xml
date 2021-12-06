@@ -31,6 +31,8 @@
 
         </activity>
         <service android:name=".utils.LocationService"/>
+        <service android:name=".utils.OfflineSyncService"/>
+
         <service android:name=".utils.GPSTracker"
             tools:ignore="Instantiatable" />
 

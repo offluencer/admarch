@@ -17,6 +17,6 @@ public class Viewer {
 
     @Override
     public String toString() {
-        return "{\"gender\":\"" + gender + "\"," + ", \"avgAge\":\"" + avgAge + "\"" + "}";
+        return "{\"gender\":\"" + gender + "\"" + ", \"avgAge\":\"" + avgAge + "\"" + "}";
     }
 }

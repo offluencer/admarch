@@ -12,4 +12,9 @@ public class Locations {
     public void setLocations(List<Location> locations) {
         this.locations = locations;
     }
+
+    @Override
+    public String toString() {
+        return "{" + "locations:[" + locations + "]}";
+    }
 }

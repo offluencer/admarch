@@ -31,11 +31,13 @@ public class SectionPageAdapter extends FragmentPagerAdapter {
                 HomeFragment homeFragment = new HomeFragment();
                 return homeFragment;
             case 1:
-                ProfileFragment profileFragment = new ProfileFragment();
-                return profileFragment;
-            case 2:
                 LeaderFragment leaderFragment = new LeaderFragment();
                 return leaderFragment;
+//                ProfileFragment profileFragment = new ProfileFragment();
+//                return profileFragment;
+//            case 2:
+//                LeaderFragment leaderFragment = new LeaderFragment();
+//                return leaderFragment;
             default:
                 return null;
         }
