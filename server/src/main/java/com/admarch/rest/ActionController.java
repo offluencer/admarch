@@ -39,6 +39,13 @@ public class ActionController {
         // TODO - should move this to dao
         String redirectURL = qrCodeInfoRepository.getCampaignUrl(qrCodeId);
 
+        // TODO - should move this to dao
+        String influencerRegNo = qrCodeInfoRepository.getInfluencerRegNo(qrCodeId);
+
+        // pre populate registration number
+        if(redirectURL!=null)
+            redirectURL = redirectURL.replace("{regNo}",influencerRegNo);
+
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(redirectURL);
         return redirectView;

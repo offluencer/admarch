@@ -16,5 +16,8 @@ public interface QRCodeInfoRepository extends CrudRepository<QRCodeInfo,Integer>
 
     @Query(value = "select C.tinyUrl from Campaign C,QRCodeInfo Q where Q.campaignId=C.campaignId and Q.id=?1",nativeQuery = true)
     String getCampaignUrl(String qrCodeId);
+
+    @Query(value = "select I.regNumber from Influencer I,QRCodeInfo Q where Q.infuencerRegNo=I.regNumber and Q.id=?1",nativeQuery = true)
+    String getInfluencerRegNo(String qrCodeId);
 }
 
