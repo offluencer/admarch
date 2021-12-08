@@ -33,6 +33,9 @@ public interface APIInterface {
         @POST("v1/endRide")
         Call<EndRideResponse> endRide(@Body EndRideResponse endRide);
 
+        @POST("v1/batch-rides-feed")
+        Call<List<EndRideResponse>> endRideBatch(@Body List<EndRideResponse> endRide);
+
         @GET("v1/earning")
         Call<Earnings> getEarnings(@Query("regNumber") String regNumber);
 

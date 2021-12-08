@@ -1,10 +1,15 @@
 package com.admarch.offluence;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -28,7 +33,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 import retrofit2.Call;
@@ -363,6 +371,8 @@ public class RideLayout extends Activity implements View.OnClickListener {
         {
             endRideResponse.setRideDestinationLat(String.valueOf(gpsTracker.getLatitude()));
             endRideResponse.setRideDestinationLon(String.valueOf(gpsTracker.getLongitude()));
+        }else{
+            checkPermission();
         }
 
         endRideResponse.setRideSourceLat(sessionManager.getKeyActiveRideLat());
@@ -376,6 +386,10 @@ public class RideLayout extends Activity implements View.OnClickListener {
 
                 if (endRideResponse1 != null) {
                     Toast.makeText(getApplicationContext(),"Ride details successfully sent", Toast.LENGTH_LONG).show();
+
+                }else{
+                    FileUtil.writeToInternalStorage(endRideResponse.toString(),getApplicationContext());
+                    Toast.makeText(getApplicationContext(),"Network unavailable", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -476,4 +490,39 @@ public class RideLayout extends Activity implements View.OnClickListener {
 // super.onBackPressed();
 // Not calling **super**, disables back button in current screen.
     }
+    public void checkPermission() {
+        GPSTracker gpsTracker = new GPSTracker(getApplicationContext());
+        if(!gpsTracker.getIsGPSTrackingEnabled()){
+            new AlertDialog.Builder(RideLayout.this)
+                    .setMessage("GPS unavailable")
+                    .setPositiveButton("Open network setting", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                            getApplicationContext().startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        }
+                    })
+                    .show();
+        }
+        if (Build.VERSION.SDK_INT >= 23) {
+
+            if (ContextCompat.checkSelfPermission( this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                return;
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+            return;
+        } else {
+            return;
+        }
+    }
+
 }

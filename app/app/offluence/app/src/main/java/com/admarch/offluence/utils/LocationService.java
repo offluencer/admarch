@@ -44,6 +44,7 @@ public class LocationService extends Service {
     @Deprecated
     public void onStart(Intent intent, int startId) {
 
+        Context context = this.getApplicationContext();
         super.onStart(intent, startId);
         session = new SessionManager(this.getApplicationContext());
 
@@ -72,7 +73,11 @@ public class LocationService extends Service {
                             locations.setLocations(locationList);
 
 
-                            sendLocation(locations);
+                            if(CommonMethod.isNetworkAvailable(context)){
+                                sendLocation(locations);
+                            }else{
+                                FileUtil.writeLocationToInternalStorage(location.toString(),context);
+                            }
 
 
 //                            flag = comapre_LatitudeLongitude();
@@ -157,8 +162,6 @@ public class LocationService extends Service {
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-
-
 
                 }
 

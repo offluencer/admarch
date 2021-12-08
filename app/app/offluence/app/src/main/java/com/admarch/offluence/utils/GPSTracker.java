@@ -142,7 +142,7 @@ public class GPSTracker extends Service implements LocationListener {
                     // for ActivityCompat#requestPermissions for more details.
 
 
-                    return;
+                    //return;
                 }
                 locationManager.requestLocationUpdates(
                         provider_info,
