@@ -39,4 +39,6 @@ public class Influencer implements Serializable {
     private int loanAmount;
     @Column(name = "registerDate")
     private Timestamp registerDate;
+    @Column(name = "type")
+    private String type;
 }

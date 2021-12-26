@@ -24,6 +24,8 @@ public class InfluencerServiceImpl implements InfluencerService{
         influencerRepository.save(influencer);
     }
 
+
+
     @Override
     public List<LeaderBoard> getEarningsRanking() {
         return actionsRepository.countTotalEarningsByRegisterNumber();
@@ -37,6 +39,11 @@ public class InfluencerServiceImpl implements InfluencerService{
         }catch (Exception ex){
             return new Earnings();
         }
+    }
+
+    @Override
+    public Influencer getInfluencerByregNo(String regNo) {
+        return influencerRepository.findOne(regNo);
     }
 
 }

@@ -12,5 +12,6 @@ public interface InfluencerService {
     void createInfluencer(Influencer influencer);
     List<LeaderBoard> getEarningsRanking();
     Earnings getInfluencerEarning(String regNumber);
+    Influencer getInfluencerByregNo(String regNo);
 
 }

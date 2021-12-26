@@ -1,7 +1,9 @@
 package com.admarch.rest;
 
 import com.admarch.dao.QRCodeInfoRepository;
+import com.admarch.model.Influencer;
 import com.admarch.model.QRCodeInfo;
+import com.admarch.service.InfluencerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +20,9 @@ public class QRCodeController {
     @Autowired
     private QRCodeInfoRepository qrCodeInfoRepository;
 
+    @Autowired
+    private InfluencerService influencerService;
+
     @RequestMapping(method = RequestMethod.GET, value = "/{version:[v|V][0-9]+}/qrcode-tag-form")
     public ModelAndView showQRCodeForm() {
         return new ModelAndView("qrcodetagform");
@@ -25,13 +30,26 @@ public class QRCodeController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/{version:[v|V][0-9]+}/qrcode-tag")
     public String tagQRCode(@RequestParam("qrcode") String qrCode,
-                              @RequestParam("regNo") String regNo) {
+                              @RequestParam("regNo") String regNo,
+                            @RequestParam("type") String type) {
         // save the qr code and registered number in database
         String response = null;
         String successResponse = "QR code: "+qrCode+ " has been tagged to registered number: "+regNo;
         String failureResponse = "Failed to tag the QR code";
 
+        /*
+            This is temporary.
+         */
+
         try{
+            // If the offluencer register number is not there add to the table
+            if(influencerService.getInfluencerByregNo(regNo) == null){
+                Influencer influencer = new Influencer();
+                influencer.setRegNumber(regNo);
+                influencer.setType(type);
+                influencerService.createInfluencer(influencer);
+            }
+
             qrCodeInfoRepository.save(constructQRCodeInfo(qrCode,regNo,campaignId));
             response = successResponse;
         }catch (Exception e){
